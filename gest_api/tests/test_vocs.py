@@ -1,6 +1,6 @@
 import pytest
 from pydantic import ValidationError
-from generator_standard.vocs import (
+from gest_api.vocs import (
     ContinuousVariable,
     DiscreteVariable,
     VOCS,

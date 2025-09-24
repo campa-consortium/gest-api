@@ -298,7 +298,7 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
             .. code-block:: python
                 :linenos:
 
-                from generator_standard.vocs import VOCS
+                from gest_api.vocs import VOCS
 
                 vocs = VOCS(variables={"x": [0.0, 1.0]})
                 ...
@@ -320,7 +320,7 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
             .. code-block:: python
                 :linenos:
 
-                from generator_standard.vocs import VOCS
+                from gest_api.vocs import VOCS
 
                 vocs = VOCS(objectives={"f": "MINIMIZE"})
                 ...
@@ -344,7 +344,7 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
             .. code-block:: python
                 :linenos:
 
-                from generator_standard.vocs import VOCS
+                from gest_api.vocs import VOCS
 
                 vocs = VOCS(constraints={"c": ["LESS_THAN", 1.0]})
                 ...
@@ -362,7 +362,7 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
             .. code-block:: python
                 :linenos:
 
-                from generator_standard.vocs import VOCS
+                from gest_api.vocs import VOCS
 
                 vocs = VOCS(constants={"alpha": 1.0, "beta": 2.0})
 
@@ -376,7 +376,7 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
             .. code-block:: python
                 :linenos:
 
-                from generator_standard.vocs import VOCS
+                from gest_api.vocs import VOCS
 
                 vocs = VOCS(observables={"temp", "temp2"})
                 ...

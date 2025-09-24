@@ -5,7 +5,7 @@
 #SPHINXOPTS    = -b spelling
 SPHINXOPTS    =
 SPHINXBUILD   = python3 -msphinx
-SPHINXPROJ    = generator_standard
+SPHINXPROJ    = gest_api
 SOURCEDIR     = .
 BUILDDIR      = _build
 

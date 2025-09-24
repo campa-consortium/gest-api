@@ -2,5 +2,5 @@
 Generator API
 =============
 
-.. autoclass:: generator_standard.generator.Generator
+.. autoclass:: gest_api.generator.Generator
     :members:

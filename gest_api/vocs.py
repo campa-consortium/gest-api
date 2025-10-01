@@ -1,8 +1,5 @@
 from abc import ABC, abstractmethod
-from enum import Enum
-from typing import Any, Optional
-from pydantic import BaseModel, ConfigDict, field_serializer
-
+from typing import Any, Union, Optional, Tuple, Type
 from pydantic import (
     conlist,
     conset,
@@ -10,11 +7,13 @@ from pydantic import (
     field_validator,
     model_validator,
     BaseModel,
+    ConfigDict,
+    field_serializer
 )
 
 
 class BaseField(BaseModel):
-    dtype: Optional[str] = None
+    dtype: Optional[Union[str, Type, Tuple]] = None
 
 
 class BaseVariable(BaseField):
@@ -270,7 +269,7 @@ class ObservableDict(ValidatedDict):
                 )
 
             return Observable(**val)
-        elif isinstance(val, str):
+        elif isinstance(val, (str, type, tuple)):
             return Observable(dtype=val)
         else:
             raise ValueError(f"observable input type {type(val)} not supported")

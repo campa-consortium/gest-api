@@ -46,7 +46,7 @@ Example:
 
   ```python
 
-  from generator_standard.vocs import VOCS
+  from gest_api.vocs import VOCS
 
   >>> VOCS(
     variables = {"x1":[0, 1], "x2":[0, 5]},
@@ -134,11 +134,10 @@ Each generator will be a Python class that defines the following methods:
   ```
 
   Any points provided to the generator via `ingest` that were not created by the current generator instance should omit the `_id` field. If points are given to `ingest` with an `_id` value that is not known internally, a `ValueError` error should be raised.
-  
+
 - `finalize()`:
 
-  **Optional**. Performs any work required to close down the generator. Some generators may need to close down background processes, files, databases,
-  or dump data to disk. This is similar to calling `.close()` on an open file.
+  **Optional**. Performs any work required to close down the generator. Some generators may need to close down background processes, files, databases, or asynchronous components. After finalize is called, the generator’s data is guaranteed to be up to date, including results from any outstanding processes, threads, or asynchronous tasks.
 
   Example:
 

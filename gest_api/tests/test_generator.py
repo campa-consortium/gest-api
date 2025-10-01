@@ -1,7 +1,7 @@
 import pytest
 import random
-from generator_standard.generator import Generator
-from generator_standard.vocs import (
+from gest_api.generator import Generator
+from gest_api.vocs import (
     VOCS,
     ContinuousVariable,
     MinimizeObjective,

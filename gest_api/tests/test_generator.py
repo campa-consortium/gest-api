@@ -79,6 +79,7 @@ def test_gen_fails_without_variable():
             objectives={"f": "MINIMIZE"},
         ))
 
+
 def test_gen_fails_without_objective():
     with pytest.raises(ValueError, match="at least one objective"):
         RandomGenerator(VOCS(

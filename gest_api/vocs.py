@@ -1,8 +1,5 @@
 from abc import ABC, abstractmethod
-from enum import Enum
 from typing import Any, Union, Optional, Tuple, Type
-from pydantic import BaseModel, ConfigDict, field_serializer
-
 from pydantic import (
     conlist,
     conset,
@@ -10,6 +7,8 @@ from pydantic import (
     field_validator,
     model_validator,
     BaseModel,
+    ConfigDict,
+    field_serializer
 )
 
 

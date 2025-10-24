@@ -11,6 +11,8 @@ This repository is an effort to standardize the interface of the **generators** 
 
 *Example: [using `Xopt` generators in `optimas`](https://github.com/optimas-org/optimas/pull/151)*
 
+**Read the Docs:** https://gest-api.readthedocs.io/en/latest/
+
 # Definitions
 
 - **Generator:**

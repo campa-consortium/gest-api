@@ -28,7 +28,6 @@ VOCS API
 
             - A two-element list, representing bounds.
             - A set of discrete values, with curly-braces.
-            - A single integer.
 
         .. code-block:: python
             :linenos:
@@ -38,8 +37,6 @@ VOCS API
             vocs = VOCS(variables={"x": [0.0, 1.0]})
             ...
             vocs = VOCS(variables={"x": {0, 1, 2, "/usr", "/home", "/bin"}})
-            ...
-            vocs = VOCS(variables={"x": 32})
 
 
     .. tab-item:: objectives

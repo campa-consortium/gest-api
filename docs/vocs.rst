@@ -15,9 +15,6 @@ VOCS API
 
 .. autoclass:: gest_api.vocs.VOCS
    :no-members:
-   :no-undoc-members:
-   :no-inherited-members:
-   :no-special-members:
 
 
 .. tab-set::
@@ -126,21 +123,12 @@ of an optimization problem.
 
 Each section below links to the detailed structure for that parameter type.
 
-- **Variables:** :doc:`parameters/variables`
-- **Objectives:** :doc:`parameters/objectives`
-- **Constraints:** :doc:`parameters/constraints`
-- **Constants:** :doc:`parameters/constants`
-- **Observables:** :doc:`parameters/observables`
+.. toctree::
+   :maxdepth: 1
+   :caption: Parameter Reference
 
-.. Examples
-.. --------
-
-.. Shorthand usage:
-
-.. .. code-block:: python
-
-..    VOCS(
-..        variables={"x": [0, 1]},
-..        objectives={"f": "MINIMIZE"},
-..        constraints={"c": ["LESS_THAN", 1.0]},
-..    )
+   parameters/variables
+   parameters/objectives
+   parameters/constraints
+   parameters/constants
+   parameters/observables

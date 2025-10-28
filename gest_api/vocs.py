@@ -345,26 +345,32 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
 
     @property
     def bounds(self) -> list:
+        """Return the domain bounds for all variables as a list of [lower, upper] pairs."""
         return [v.domain for _, v in self.variables.items()]
 
     @property
     def variable_names(self) -> list[str]:
+        """Return a list of all variable names."""
         return list(self.variables.keys())
 
     @property
     def objective_names(self) -> list[str]:
+        """Return a list of all objective names."""
         return list(self.objectives.keys())
 
     @property
     def constraint_names(self) -> list[str]:
+        """Return a list of all constraint names."""
         return list(self.constraints.keys())
 
     @property
     def observable_names(self) -> list[str]:
+        """Return a list of all observable names."""
         return list(self.observables.keys())
 
     @property
     def output_names(self) -> list[str]:
+        """Return a list of all output names (objectives, constraints, and observables)."""
         full_list = self.objective_names
         for ele in self.constraint_names:
             if ele not in full_list:
@@ -378,36 +384,45 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
 
     @property
     def constant_names(self) -> list[str]:
+        """Return a list of all constant names."""
         return list(self.constants.keys())
 
     @property
     def all_names(self) -> list[str]:
+        """Return a list of all names (variables, constants, and outputs)."""
         return self.variable_names + self.constant_names + self.output_names
 
     @property
     def n_variables(self) -> int:
+        """Return the number of variables."""
         return len(self.variables)
 
     @property
     def n_constants(self) -> int:
+        """Return the number of constants."""
         return len(self.constants)
 
     @property
     def n_inputs(self) -> int:
+        """Return the total number of inputs (variables + constants)."""
         return self.n_variables + self.n_constants
 
     @property
     def n_objectives(self) -> int:
+        """Return the number of objectives."""
         return len(self.objectives)
 
     @property
     def n_constraints(self) -> int:
+        """Return the number of constraints."""
         return len(self.constraints)
 
     @property
     def n_observables(self) -> int:
+        """Return the number of observables."""
         return len(self.observables)
 
     @property
     def n_outputs(self) -> int:
+        """Return the total number of outputs (objectives + constraints + observables)."""
         return len(self.output_names)

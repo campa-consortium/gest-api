@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = 'Campa_Generator_Standard'
+name = 'GeSt'
 description = 'An effort to standardize the interface of generators in optimization libraries'
 readme = 'README.md'
 version = '0.1'

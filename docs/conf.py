@@ -68,7 +68,7 @@ master_doc = "index"
 latex_doc = "latex_index"
 
 # General information about the project.
-project = "Generator_Standard"
+project = "GeSt"
 copyright = str(datetime.now().year) + " Generator Standard Authors"
 # today_fmt = "%B %-d, %Y"
 

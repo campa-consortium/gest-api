@@ -24,13 +24,14 @@ jobs:
           pip install pydantic
 
       - name: Install testing dependencies
-        run: |          
+        run: |
           pip install pytest pytest-cov
 
       - name: Run tests
-        run: pytest --cov=generator_standard --cov-report=xml
+        run: pytest --cov=gest_api --cov-report=xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: campa-consortium/gest-api

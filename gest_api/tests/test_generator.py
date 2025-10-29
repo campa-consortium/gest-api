@@ -1,7 +1,7 @@
 import pytest
 import random
-from generator_standard.generator import Generator
-from generator_standard.vocs import (
+from gest_api.generator import Generator
+from gest_api.vocs import (
     VOCS,
     ContinuousVariable,
     MinimizeObjective,
@@ -78,6 +78,7 @@ def test_gen_fails_without_variable():
             variables={},
             objectives={"f": "MINIMIZE"},
         ))
+
 
 def test_gen_fails_without_objective():
     with pytest.raises(ValueError, match="at least one objective"):

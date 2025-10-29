@@ -4,7 +4,7 @@
 VOCS API
 ========
 
-.. autopydantic_model:: generator_standard.vocs.VOCS
+.. autopydantic_model:: gest_api.vocs.VOCS
     :model-show-json: False
     :model-show-validator-members: False
     :field-list-validators: False

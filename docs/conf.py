@@ -68,9 +68,7 @@ master_doc = "index"
 latex_doc = "latex_index"
 
 # General information about the project.
-project = "GeSt"
-# copyright = str(datetime.now().year) + " Argonne National Laboratory"
-# author = "Jeffrey Larson, Stephen Hudson, Stefan M. Wild, David Bindel and John-Luke Navarro"
+project = "gest-api"
 # today_fmt = "%B %-d, %Y"
 
 # The version info for the project you're documenting, acts as replacement for

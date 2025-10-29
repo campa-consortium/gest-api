@@ -3,8 +3,8 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = 'GeSt'
-description = 'An effort to standardize the interface of generators in optimization libraries'
+name = 'gest-api'
+description = 'A standard for generating test points and exchanging variables, objectives, and constraints in optimization problems'
 readme = 'README.md'
 version = '0.1'
 requires-python = '>=3.10'

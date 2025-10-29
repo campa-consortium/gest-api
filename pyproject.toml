@@ -7,9 +7,9 @@ name = 'GeSt'
 description = 'An effort to standardize the interface of generators in optimization libraries'
 readme = 'README.md'
 version = '0.1'
+dependencies = ["pydantic"]
 requires-python = '>=3.10'
 keywords = ['optimization', 'workflows', 'generators']
-dependencies = ['pydantic']
 classifiers = [
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Science/Research',

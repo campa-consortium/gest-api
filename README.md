@@ -72,22 +72,22 @@ Each generator will be a Python class that defines the following methods:
 
   Examples:
 
-    ```python
-    >>> generator = NelderMead(VOCS(variables={"x": [-5.0, 5.0], "y": [-3.0, 2.0]}, objectives={"f": "MAXIMIZE"}), adaptive=False)
-    ```
+  ```python
+  >>> generator = NelderMead(VOCS(variables={"x": [-5.0, 5.0], "y": [-3.0, 2.0]}, objectives={"f": "MAXIMIZE"}), adaptive=False)
+  ```
 
 - `_validate_vocs(self, vocs) -> None`:
 
   Validates the `VOCS` passed to the generator. Raises ``ValueError`` if the VOCS passed to the generator duing construction is invalid.
 
-    Examples:
+  Examples:
 
-    ```python
-    >>> generator = NelderMead(
-      VOCS(variables={"x": [-5.0, 5.0], "y": [-3.0, 2.0]}, objectives={"f": "MAXIMIZE"}, constraints={"c":["LESS_THAN", 0.0]})
-    )
-    ValueError("NelderMead generator cannot accept constraints")
-    ```
+  ```python
+  >>> generator = NelderMead(
+    VOCS(variables={"x": [-5.0, 5.0], "y": [-3.0, 2.0]}, objectives={"f": "MAXIMIZE"}, constraints={"c":["LESS_THAN", 0.0]})
+  )
+  ValueError("NelderMead generator cannot accept constraints")
+  ```
 
 - `suggest(num_points: int | None = None) -> list[dict]`:
 
@@ -105,17 +105,18 @@ Each generator will be a Python class that defines the following methods:
 
   Examples:
 
-    ```python
+  ```python
 
-    >>> generator.suggest(2)
-    [{"x": 1.2, "y": 0.8}, {"x": -0.2, "y": 0.4}]
+  >>> generator.suggest(2)
+  [{"x": 1.2, "y": 0.8}, {"x": -0.2, "y": 0.4}]
 
-    >>> generator.suggest(100)  # too many points
-    ValueError
+  >>> generator.suggest(100)  # too many points
+  ValueError
 
-    >>> generator.suggest()
-    [{"x": 1.2, "y": 0.8}, {"x": -0.2, "y": 0.4}, {"x": 4.3, "y": -0.1}]
-    ```
+  >>> generator.suggest()
+  [{"x": 1.2, "y": 0.8}, {"x": -0.2, "y": 0.4}, {"x": 4.3, "y": -0.1}]
+
+  ```
 
 - `ingest(points: list[dict])`:
 

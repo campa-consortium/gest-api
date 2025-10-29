@@ -34,3 +34,5 @@ Longhand form:
 Associated classes:
 
 .. autoclass:: gest_api.vocs.Constant
+
+.. include:: _dtype_note.rst

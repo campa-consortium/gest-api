@@ -43,3 +43,5 @@ Associated classes:
 .. autoclass:: gest_api.vocs.MinimizeObjective
 .. autoclass:: gest_api.vocs.MaximizeObjective
 .. autoclass:: gest_api.vocs.ExploreObjective
+
+.. include:: _dtype_note.rst

@@ -43,3 +43,5 @@ Associated classes:
 .. autoclass:: gest_api.vocs.LessThanConstraint
 .. autoclass:: gest_api.vocs.GreaterThanConstraint
 .. autoclass:: gest_api.vocs.BoundsConstraint
+
+.. include:: _dtype_note.rst

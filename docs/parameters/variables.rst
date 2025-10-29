@@ -41,3 +41,5 @@ Associated classes:
 .. autoclass:: gest_api.vocs.BaseVariable
 .. autoclass:: gest_api.vocs.ContinuousVariable
 .. autoclass:: gest_api.vocs.DiscreteVariable
+
+.. include:: _dtype_note.rst

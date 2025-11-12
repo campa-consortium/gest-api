@@ -9,7 +9,9 @@ This repository is an effort to standardize the interface of the **generators** 
 
 **The objective of this effort is for these different libraries to be able to use each other's generators with little effort.**
 
-*Example: [using `Xopt` generators in `optimas`](https://github.com/optimas-org/optimas/pull/151)*
+*Examples:*  
+> [using `libEnsemble` generators in `optimas`](https://github.com/optimas-org/optimas/pull/283)  
+> [using `Xopt` generators in `optimas`](https://github.com/optimas-org/optimas/pull/151)
 
 # Definitions
 

@@ -21,17 +21,48 @@ class BaseVariable(BaseField):
 
 
 class ContinuousVariable(BaseVariable):
-    domain: conlist(float, min_length=2, max_length=2) = Field(
-        description="domain of the variable, [min, max]"
+    domain: Union[
+        conlist(float, min_length=2, max_length=2),
+        conlist(conlist(float, min_length=2, max_length=2), min_length=1)
+    ] = Field(
+        description="domain of the variable: [min, max] for scalar, or [[min1, max1], [min2, max2], ...] for arrays"
     )
 
     @model_validator(mode="after")
     def validate_bounds(self):
-        # check to make sure bounds are correct
-        if not self.domain[1] > self.domain[0]:
-            raise ValueError(
-                "Bounds specified do not satisfy the condition value[1] > value[0]."
-            )
+        # Handle array variables (dtype is a tuple)
+        if isinstance(self.dtype, tuple):
+            # Domain should be a list of [min, max] pairs, one per dimension
+            if not isinstance(self.domain[0], list):
+                raise ValueError(
+                    f"For array variable with dtype={self.dtype}, domain must be a list of [min, max] pairs"
+                )
+            # Extract dimensions from dtype - handle both (n,) and (type, (n,)) formats
+            if isinstance(self.dtype[0], type) or isinstance(self.dtype[0], str):
+                expected_dims = self.dtype[1][0] if len(self.dtype) > 1 and isinstance(self.dtype[1], tuple) else 0
+            else:
+                # Format: (n,)
+                expected_dims = self.dtype[0] if len(self.dtype) > 0 else 0
+            if len(self.domain) != expected_dims:
+                raise ValueError(
+                    f"Domain has {len(self.domain)} bounds but dtype specifies {expected_dims} dimensions"
+                )
+            # Validate each dimension's bounds
+            for i, bounds in enumerate(self.domain):
+                if not (len(bounds) == 2 and bounds[1] > bounds[0]):
+                    raise ValueError(
+                        f"Dimension {i}: bounds {bounds} do not satisfy [min, max] with max > min"
+                    )
+        else:
+            # Scalar variable - backwards compatible
+            if isinstance(self.domain[0], list):
+                raise ValueError(
+                    "For scalar variable, domain should be a single [min, max] pair"
+                )
+            if not self.domain[1] > self.domain[0]:
+                raise ValueError(
+                    "Bounds specified do not satisfy the condition value[1] > value[0]."
+                )
         return self
 
 

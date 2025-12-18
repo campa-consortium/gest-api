@@ -100,8 +100,7 @@ Each generator will be a Python class that defines the following methods:
   When `num_points` is not passed, the generator decides how many points to return.
   In this case, different generators will return different number of points. For instance, the simplex would return 1 or 3 points. A genetic algorithm could return the whole population. Batched Bayesian optimization would return the batch size (i.e., number of points that can be processed in parallel), which would be specified in the constructor.
 
-  In addition, some generators can generate a unique identifier for each generated point. If implemented, this identifier should appear in the dictionary under the key `"_id"`.
-  When a generator produces an identifier, it must be included in the corresponding dictionary passed back to that generator in `ingest` (under the same key: `"_id"`).
+  In addition, some generators can assign a unique identifier to each generated point (indicated by the `returns_id` class attribute). If implemented, this identifier should appear in the dictionary under the key "_id". When a generator produces an identifier, it must be included in the corresponding dictionary passed back to that generator in `ingest` (under the same key: `"_id"`).
 
   Examples:
 
@@ -146,3 +145,9 @@ Each generator will be a Python class that defines the following methods:
   ```python
   >>> generator.finalize()
   ```
+
+Each generator has a boolean class attribtue `returns_id`, defined in the base class as:
+
+- `returns_id: bool = False`
+
+  Indicates whether this is an `_id` producing generator.

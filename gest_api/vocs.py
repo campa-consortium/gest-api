@@ -279,6 +279,31 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
     """
     Variables, Objectives, Constraints, and other Settings (VOCS) data structure
     to describe optimization problems.
+
+    VOCS objects specify the following fields:
+
+    **Inputs:**
+        - ``variables``: defines the names and types of input parameters that will be passed to an objective function in order to solve the optimization problem.
+        - ``constants`` (optional): defines the names and values of constant values that will be passed alongside ``variables`` to the objective function.
+
+    **Outputs:**
+        - ``objectives``: defines the names and types of function outputs that will be optimized or explored.
+        - ``constraints`` (optional): defines the names and types of function outputs that will be used as constraints that need to be satisfied for a valid solution to the optimization problem.
+        - ``observables`` (optional): defines the names of any other function outputs that should be passed to the generator (alongside the ``objectives`` and ``constraints``).
+
+    **Example:**
+
+    .. code-block:: python
+
+        from gest_api.vocs import VOCS
+
+        vocs = VOCS(
+            variables={"x1": [0, 1], "x2": [0, 5]},
+            objectives={"f1": "MAXIMIZE"},
+            constants={"alpha": 0.55},
+            constraints={"c1": ["LESS_THAN", 0]},
+            observables={"o1"}
+        )
     """
     variables: VariableDict = Field(
         description="variable names with bounds or discrete sets"

@@ -2,9 +2,7 @@
 Generator API
 =============
 
-**Class Attributes:**
-
-- ``returns_id`` (bool): Indicates whether this generator returns IDs with the suggested points. Default is ``False``. Subclasses should override this if they return IDs.
+Each generator is a Python class that defines the following methods and attributes.
 
 .. autoclass:: gest_api.generator.Generator
     :members:

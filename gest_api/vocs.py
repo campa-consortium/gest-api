@@ -277,133 +277,15 @@ class ObservableDict(ValidatedDict):
 
 class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
     """
-
     Variables, Objectives, Constraints, and other Settings (VOCS) data structure
     to describe optimization problems.
-
-    Each generator accepts this object as the parameter, and must validate
-    that it can handle the specified set of variables, objectives, constraints, etc.
-
-    .. code-block:: python
-        :linenos:
-
-        from generator_standard.vocs import VOCS
-
-        >>> vocs = VOCS(
-            variables = {"x1":[0, 1], "x2":[0, 5]},
-            objectives = {"f1":"MAXIMIZE"},
-            constraints = {"c1":["LESS_THAN", 0]},
-            constants = {"alpha": 0.55},
-            observables = {"o1"}
-        )
-        ...
-        >>> my_generator = MyGenerator(vocs, parameter=100, my_keyword=10)
-
-    .. tab-set::
-
-        .. tab-item:: variables
-
-            Names and settings for input parameters for passing to an objective
-            function to solve the optimization problem.
-
-            A **dictionary** with **keys** being variable names (as strings) and **values** as either:
-
-                - A two-element list, representing bounds.
-                - A set of discrete values, with curly-braces.
-                - A single integer.
-
-            .. code-block:: python
-                :linenos:
-
-                from gest_api.vocs import VOCS
-
-                vocs = VOCS(variables={"x": [0.0, 1.0]})
-                ...
-                vocs = VOCS(variables={"x": {0, 1, 2, "/usr", "/home", "/bin"}})
-                ...
-                vocs = VOCS(variables={"x": 32})
-
-
-        .. tab-item:: objectives
-
-            Names of objective function outputs, and guidance for the direction of optimization.
-
-            A **dictionary** with **keys** being objective names (as strings) and **values** as either:
-
-                - ``"MINIMIZE"``
-                - ``"MAXIMIZE"``
-                - ``"EXPLORE"``
-
-            .. code-block:: python
-                :linenos:
-
-                from gest_api.vocs import VOCS
-
-                vocs = VOCS(objectives={"f": "MINIMIZE"})
-                ...
-                vocs = VOCS(objectives={"f": "MAXIMIZE"})
-                ...
-                vocs = VOCS(objectives={"f": "EXPLORE"})
-
-
-        .. tab-item:: constraints
-
-            Names of function outputs that and their category of constraint that must be satisfied for
-            a valid solution to the optimization problem.
-
-            A **dictionary** with **keys** being constraint names (as strings) and **values** as a length-2 list
-            with the first element being ``"LESS_THAN"``, ``"GREATER_THAN"``, or ``"BOUNDS"``.
-
-            The second element depends on the type of constraint:
-                - If ``"BOUNDS"``, a two-element list of floats, representing boundaries.
-                - If ``"LESS_THAN"``, or ``"GREATER_THAN"``, a single float value.
-
-            .. code-block:: python
-                :linenos:
-
-                from gest_api.vocs import VOCS
-
-                vocs = VOCS(constraints={"c": ["LESS_THAN", 1.0]})
-                ...
-                vocs = VOCS(constraints={"c": ["GREATER_THAN", 0.0]})
-                ...
-                vocs = VOCS(constraints={"c": ["BOUNDS", [0.0, 1.0]]})
-
-
-        .. tab-item:: constants
-
-            Names and values of constants for passing alongside `variables` to the objective function.
-
-            A **dictionary** with **keys** being constant names (as strings) and **values** as any type.
-
-            .. code-block:: python
-                :linenos:
-
-                from gest_api.vocs import VOCS
-
-                vocs = VOCS(constants={"alpha": 1.0, "beta": 2.0})
-
-        .. tab-item:: observables
-
-            Names of other objective function outputs that will be passed
-            to the optimizer (alongside the `objectives` and `constraints`).
-
-            A **set** of strings or a **dictionary** with **keys** being names and **values** being type:
-
-            .. code-block:: python
-                :linenos:
-
-                from gest_api.vocs import VOCS
-
-                vocs = VOCS(observables={"temp", "temp2"})
-                ...
-                vocs = VOCS(observables={"temp": "float", "temp2": "int"})
-
     """
-
-    variables: VariableDict
+    variables: VariableDict = Field(
+        description="variable names with bounds or discrete sets"
+    )
     objectives: ObjectiveDict = Field(
-        default=ObjectiveDict(), description="objective names with type of objective"
+        default=ObjectiveDict(),
+        description="objective names with type of objective"
     )
     constraints: ConstraintDict = Field(
         default=ConstraintDict(),
@@ -463,26 +345,32 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
 
     @property
     def bounds(self) -> list:
+        """Return the domain bounds for all variables as a list of [lower, upper] pairs."""
         return [v.domain for _, v in self.variables.items()]
 
     @property
     def variable_names(self) -> list[str]:
+        """Return a list of all variable names."""
         return list(self.variables.keys())
 
     @property
     def objective_names(self) -> list[str]:
+        """Return a list of all objective names."""
         return list(self.objectives.keys())
 
     @property
     def constraint_names(self) -> list[str]:
+        """Return a list of all constraint names."""
         return list(self.constraints.keys())
 
     @property
     def observable_names(self) -> list[str]:
+        """Return a list of all observable names."""
         return list(self.observables.keys())
 
     @property
     def output_names(self) -> list[str]:
+        """Return a list of all output names (objectives, constraints, and observables)."""
         full_list = self.objective_names
         for ele in self.constraint_names:
             if ele not in full_list:
@@ -496,36 +384,45 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
 
     @property
     def constant_names(self) -> list[str]:
+        """Return a list of all constant names."""
         return list(self.constants.keys())
 
     @property
     def all_names(self) -> list[str]:
+        """Return a list of all names (variables, constants, and outputs)."""
         return self.variable_names + self.constant_names + self.output_names
 
     @property
     def n_variables(self) -> int:
+        """Return the number of variables."""
         return len(self.variables)
 
     @property
     def n_constants(self) -> int:
+        """Return the number of constants."""
         return len(self.constants)
 
     @property
     def n_inputs(self) -> int:
+        """Return the total number of inputs (variables + constants)."""
         return self.n_variables + self.n_constants
 
     @property
     def n_objectives(self) -> int:
+        """Return the number of objectives."""
         return len(self.objectives)
 
     @property
     def n_constraints(self) -> int:
+        """Return the number of constraints."""
         return len(self.constraints)
 
     @property
     def n_observables(self) -> int:
+        """Return the number of observables."""
         return len(self.observables)
 
     @property
     def n_outputs(self) -> int:
+        """Return the total number of outputs (objectives + constraints + observables)."""
         return len(self.output_names)

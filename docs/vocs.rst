@@ -14,7 +14,6 @@ VOCS API
 
 
 .. autoclass:: gest_api.vocs.VOCS
-   :no-members:
 
 
 .. tab-set::

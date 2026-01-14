@@ -4,8 +4,11 @@ from .vocs import VOCS
 
 class Generator(ABC):
     """
-    Tentative suggest/ingest generator interface
+    A generator is an object that recommends points to be evaluated in an optimization, using the `suggest` method.
+    It can also receive data (evaluations from past or ongoing optimization), using the `ingest` method, which helps
+    it make more informed recommendations.
 
+    *Example:*
     .. code-block:: python
 
         class MyGenerator(Generator):

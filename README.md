@@ -10,9 +10,9 @@ This repository is an effort to standardize the interface of the **generators** 
 **The objective of this effort is for these different libraries to be able to use each other's generators with little effort.**
 
 *Examples:*  
-> [Using `libEnsemble` generators in `optimas`](https://github.com/optimas-org/optimas/pull/283)
+> [Using `libEnsemble` generators in `Optimas`](https://github.com/optimas-org/optimas/pull/283)
 >
-> [Using `Xopt` generators in `optimas`](https://github.com/optimas-org/optimas/pull/291)
+> [Using `Xopt` generators in `Optimas`](https://github.com/optimas-org/optimas/pull/291)
 >
 > [Using `Xopt` generators in `libEnsemble`](https://github.com/Libensemble/libensemble/pull/1620)
 >

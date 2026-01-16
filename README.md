@@ -10,13 +10,14 @@ This repository is an effort to standardize the interface of the **generators** 
 **The objective of this effort is for these different libraries to be able to use each other's generators with little effort.**
 
 *Examples:*  
-> [Using `libEnsemble` APOSMM generator in `Optimas`](https://github.com/optimas-org/optimas/blob/e616244012ca56972c42f0643cac5f51680d928c/tests/test_libEgen_aposmm.py)
+
+> [Using `libEnsemble` APOSMM generator in `Optimas`][ex-aposmm-optimas]
 >
-> [Using `Xopt` generators in `Optimas`](https://github.com/optimas-org/optimas/blob/f49bd63d329a8aca2a3444a6a93dbda548f71cfa/tests/test_xopt_generators.py)
+> [Using `Xopt` generators in `Optimas`][ex-xopt-optimas]
 >
-> [Using `Xopt` ExpectedImprovementGenerator in `libEnsemble`](https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI.py)
+> [Using `Xopt` ExpectedImprovementGenerator in `libEnsemble`][ex-xopt-libe]
 >
-> [Using `Optimas` Multi-Fidelity Ax Generator in `libEnsemble`](https://github.com/Libensemble/libensemble/blob/e7fef19c19343c5eceaa4353985aa963ebada46c/libensemble/tests/regression_tests/test_optimas_ax_mf.py)
+> [Using `Optimas` Multi-Fidelity Ax Generator in `libEnsemble`][ex-optimas-libe]
 
 
 # Definitions
@@ -159,3 +160,11 @@ Each generator has a boolean class attribtue `returns_id`, defined in the base c
 - `returns_id: bool = False`
 
   Indicates whether this is an `_id` producing generator.
+
+
+[ex-aposmm-optimas]: https://github.com/optimas-org/optimas/blob/e616244012ca56972c42f0643cac5f51680d928c/tests/test_libEgen_aposmm.py
+[ex-xopt-optimas]: https://github.com/optimas-org/optimas/blob/f49bd63d329a8aca2a3444a6a93dbda548f71cfa/tests/test_xopt_generators.py
+[ex-xopt-libe]: https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI.py
+[ex-optimas-libe]: https://github.com/Libensemble/libensemble/blob/e7fef19c19343c5eceaa4353985aa963ebada46c/libensemble/tests/regression_tests/test_optimas_ax_mf.py
+
+

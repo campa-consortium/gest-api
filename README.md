@@ -74,49 +74,50 @@ Each generator will be a Python class that defines the following methods:
 
   Examples:
 
-    ```python
-    >>> generator = NelderMead(VOCS(variables={"x": [-5.0, 5.0], "y": [-3.0, 2.0]}, objectives={"f": "MAXIMIZE"}), adaptive=False)
-    ```
+  ```python
+  >>> generator = NelderMead(VOCS(variables={"x": [-5.0, 5.0], "y": [-3.0, 2.0]}, objectives={"f": "MAXIMIZE"}), adaptive=False)
+  ```
 
 - `_validate_vocs(self, vocs) -> None`:
 
   Validates the `VOCS` passed to the generator. Raises ``ValueError`` if the VOCS passed to the generator duing construction is invalid.
 
-    Examples:
+  Examples:
 
-    ```python
-    >>> generator = NelderMead(
-      VOCS(variables={"x": [-5.0, 5.0], "y": [-3.0, 2.0]}, objectives={"f": "MAXIMIZE"}, constraints={"c":["LESS_THAN", 0.0]})
-    )
-    ValueError("NelderMead generator cannot accept constraints")
-    ```
+  ```python
+  >>> generator = NelderMead(
+    VOCS(variables={"x": [-5.0, 5.0], "y": [-3.0, 2.0]}, objectives={"f": "MAXIMIZE"}, constraints={"c":["LESS_THAN", 0.0]})
+  )
+  ValueError("NelderMead generator cannot accept constraints")
+  ```
 
 - `suggest(num_points: int | None = None) -> list[dict]`:
 
-  Returns set of points in the input space, to be evaluated next. Each element of the list is a separate point.
-  Keys of the dictionary include the name of each input variable specified in the constructor. Values of the dictionaries are **scalars**.
+  Returns a list of points in the input space, to be evaluated next. Each element of the list is a separate point.
+  Keys of the dictionary include the name of each input variable specified in VOCS (variables+constants).
+  Values of the dictionaries are **scalars** unless the variable was declared with an array `dtype` attribute.
 
-  When `num_points` is passed, the generator should return exactly this number of points, or raise a error ``ValueError`` if it is unable to.
+  When `num_points` is passed, the generator should return exactly that number of points or raise a `ValueError`.
 
   When `num_points` is not passed, the generator decides how many points to return.
-  Different generators will return different number of points. For instance, the simplex would return 1 or 3 points. A genetic algorithm could return the whole population. Batched Bayesian optimization would return the batch size (i.e., number of points that can be processed in parallel), which would be specified in the constructor.
+  In this case, different generators will return different number of points. For instance, the simplex would return 1 or 3 points. A genetic algorithm could return the whole population. Batched Bayesian optimization would return the batch size (i.e., number of points that can be processed in parallel), which would be specified in the constructor.
 
-  In addition, some generators can generate a unique identifier for each generated point. If implemented, this identifier should appear in the dictionary under the key `"_id"`.
-  When a generator produces an identifier, it must be included in the corresponding dictionary passed back to that generator in `ingest` (under the same key: `"_id"`).
+  In addition, some generators can assign a unique identifier to each generated point (indicated by the `returns_id` class attribute). If implemented, this identifier should appear in the dictionary under the key "_id". When a generator produces an identifier, it must be included in the corresponding dictionary passed back to that generator in `ingest` (under the same key: `"_id"`).
 
   Examples:
 
-    ```python
+  ```python
 
-    >>> generator.suggest(2)
-    [{"x": 1.2, "y": 0.8}, {"x": -0.2, "y": 0.4}]
+  >>> generator.suggest(2)
+  [{"x": 1.2, "y": 0.8}, {"x": -0.2, "y": 0.4}]
 
-    >>> generator.suggest(100)  # too many points
-    ValueError
+  >>> generator.suggest(100)  # too many points
+  ValueError
 
-    >>> generator.suggest()
-    [{"x": 1.2, "y": 0.8}, {"x": -0.2, "y": 0.4}, {"x": 4.3, "y": -0.1}]
-    ```
+  >>> generator.suggest()
+  [{"x": 1.2, "y": 0.8}, {"x": -0.2, "y": 0.4}, {"x": 4.3, "y": -0.1}]
+
+  ```
 
 - `ingest(points: list[dict])`:
 
@@ -146,3 +147,9 @@ Each generator will be a Python class that defines the following methods:
   ```python
   >>> generator.finalize()
   ```
+
+Each generator has a boolean class attribtue `returns_id`, defined in the base class as:
+
+- `returns_id: bool = False`
+
+  Indicates whether this is an `_id` producing generator.

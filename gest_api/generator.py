@@ -28,6 +28,8 @@ class Generator(ABC):
 
     """
 
+    returns_id: bool = False
+
     @abstractmethod
     def __init__(self, vocs: VOCS, *args, **kwargs):
         """

@@ -14,10 +14,10 @@ This repository is an effort to standardize the interface of the **generators** 
 > [APOSMM generator][ex-aposmm-optimas]
 >
 > Using `Xopt` generators in `Optimas`:
-> [Examples][ex-xopt-optimas]
+> [Multiple Examples][ex-xopt-optimas]
 >
 > Using `Xopt` generators in `libEnsemble`:
-> [ExpectedImprovementGenerator][ex-xopt-libe] [(with Xopt-style simulation)][ex-xopt-sim-libe]
+> [ExpectedImprovement][ex-xopt-libe] - [(with Xopt-style sim)][ex-xopt-sim-libe]
 >
 > Using `Optimas` generators in `libEnsemble`:
 > [Multi-Fidelity Ax Generator][ex-optimas-libe]

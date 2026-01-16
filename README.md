@@ -15,7 +15,7 @@ This repository is an effort to standardize the interface of the **generators** 
 >
 > [Using `Xopt` generators in `Optimas`][ex-xopt-optimas]
 >
-> [Using `Xopt` ExpectedImprovementGenerator in `libEnsemble`][ex-xopt-libe] [with xopt-style sim](ex-xopt-sim-libe)
+> [Using `Xopt` ExpectedImprovementGenerator in `libEnsemble`][ex-xopt-libe] [(with xopt-style sim)](ex-xopt-sim-libe)
 >
 > [Using `Optimas` Multi-Fidelity Ax Generator in `libEnsemble`][ex-optimas-libe]
 

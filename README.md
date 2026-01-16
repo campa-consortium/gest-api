@@ -12,7 +12,7 @@ This repository is an effort to standardize the interface of the **generators** 
 *Examples:*  
 > [Using `libEnsemble` APOSMM generator in `Optimas`](https://github.com/optimas-org/optimas/blob/e616244012ca56972c42f0643cac5f51680d928c/tests/test_libEgen_aposmm.py)
 >
-> [Using `Xopt` generators in `Optimas`](https://github.com/optimas-org/optimas/blob/81cb03bf7e01fae0800347d281d57b5c0c9057f0/tests/test_xopt_generators.py)
+> [Using `Xopt` generators in `Optimas`](https://github.com/optimas-org/optimas/blob/f49bd63d329a8aca2a3444a6a93dbda548f71cfa/tests/test_xopt_generators.py)
 >
 > [Using `Xopt` ExpectedImprovementGenerator in `libEnsemble`](https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI.py)
 >

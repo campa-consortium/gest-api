@@ -9,15 +9,18 @@ This repository is an effort to standardize the interface of the **generators** 
 
 **The objective of this effort is for these different libraries to be able to use each other's generators with little effort.**
 
-*Examples:*  
-
-> [Using `libEnsemble` APOSMM generator in `Optimas`][ex-aposmm-optimas]
+*Examples:*
+> Using `libEnsemble` generators in `Optimas`:
+> [APOSMM generator][ex-aposmm-optimas]
 >
-> [Using `Xopt` generators in `Optimas`][ex-xopt-optimas]
+> Using `Xopt` generators in `Optimas`:
+> [Examples][ex-xopt-optimas]
 >
-> [Using `Xopt` ExpectedImprovementGenerator in `libEnsemble`][ex-xopt-libe] [(with xopt-style sim)](ex-xopt-sim-libe)
+> Using `Xopt` generators in `libEnsemble`:
+> [ExpectedImprovementGenerator][ex-xopt-libe] [(with Xopt-style simulation)][ex-xopt-sim-libe]
 >
-> [Using `Optimas` Multi-Fidelity Ax Generator in `libEnsemble`][ex-optimas-libe]
+> Using `Optimas` generators in `libEnsemble`:
+> [Multi-Fidelity Ax Generator][ex-optimas-libe]
 
 
 # Definitions

@@ -21,7 +21,9 @@ This repository is an effort to standardize the interface of the **generators** 
 >
 > Using `Optimas` generators in `libEnsemble`:
 > [Multi-Fidelity Ax Generator][ex-optimas-libe]
-
+>
+> Using `libEnsemble` generators in `Xopt`:
+> [APOSMM Generator][ex-aposmm-xopt]
 
 # Definitions
 
@@ -171,5 +173,5 @@ Each generator has a boolean class attribtue `returns_id`, defined in the base c
 [ex-xopt-libe]: https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI.py
 [ex-xopt-sim-libe]: https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI_xopt_sim.py
 [ex-optimas-libe]: https://github.com/Libensemble/libensemble/blob/e7fef19c19343c5eceaa4353985aa963ebada46c/libensemble/tests/regression_tests/test_optimas_ax_mf.py
-
+[ex-aposmm-xopt]: https://github.com/xopt-org/Xopt/blob/cfb8d704637aee31e836357cf47ac0acb82bdc71/xopt/tests/generators/external/test_aposmm.py
 

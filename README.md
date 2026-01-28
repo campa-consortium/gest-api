@@ -11,19 +11,19 @@ This repository is an effort to standardize the interface of the **generators** 
 
 *Examples:*
 > Using `libEnsemble` generators in `Optimas`:
-> APOSMM [NLopt][ex-aposmm-nlopt-optimas] - [IBCDFO][ex-aposmm-ibcdfo-optimas]
+> APOSMM [NLopt](https://github.com/optimas-org/optimas/blob/f7f5e656f4b98e64a0c2849b6f73aabd49af7682/examples/libe_aposmm_nlopt/run_example.py) - [IBCDFO](https://github.com/optimas-org/optimas/blob/f7f5e656f4b98e64a0c2849b6f73aabd49af7682/examples/libe_aposmm_ibcdfo/run_example.py)
 >
 > Using `Xopt` generators in `Optimas`:
-> [Multiple Examples][ex-xopt-optimas]
+> [Multiple Examples](https://github.com/optimas-org/optimas/blob/f49bd63d329a8aca2a3444a6a93dbda548f71cfa/tests/test_xopt_generators.py)
 >
 > Using `Xopt` generators in `libEnsemble`:
-> [ExpectedImprovement][ex-xopt-libe] - [(with Xopt-style sim)][ex-xopt-sim-libe]
+> [ExpectedImprovement](https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI.py) - [(with Xopt-style sim)](https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI_xopt_sim.py)
 >
 > Using `Optimas` generators in `libEnsemble`:
-> [Multi-Fidelity Ax Generator][ex-optimas-libe]
+> [Multi-Fidelity Ax Generator](https://github.com/Libensemble/libensemble/blob/e7fef19c19343c5eceaa4353985aa963ebada46c/libensemble/tests/regression_tests/test_optimas_ax_mf.py)
 >
 > Using `libEnsemble` generators in `Xopt`:
-> [APOSMM Generator][ex-aposmm-xopt]
+> [APOSMM Generator](https://github.com/xopt-org/Xopt/blob/cfb8d704637aee31e836357cf47ac0acb82bdc71/xopt/tests/generators/external/test_aposmm.py)
 
 # Definitions
 
@@ -54,11 +54,3 @@ The Python abstract classes that define the standard can be installed with:
 ```
 pip install gest-api
 ```
-
-[ex-aposmm-nlopt-optimas]: https://github.com/optimas-org/optimas/blob/f7f5e656f4b98e64a0c2849b6f73aabd49af7682/examples/libe_aposmm_nlopt/run_example.py
-[ex-aposmm-ibcdfo-optimas]: https://github.com/optimas-org/optimas/blob/f7f5e656f4b98e64a0c2849b6f73aabd49af7682/examples/libe_aposmm_ibcdfo/run_example.py
-[ex-xopt-optimas]: https://github.com/optimas-org/optimas/blob/f49bd63d329a8aca2a3444a6a93dbda548f71cfa/tests/test_xopt_generators.py
-[ex-xopt-libe]: https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI.py
-[ex-xopt-sim-libe]: https://github.com/Libensemble/libensemble/blob/589d8fb8b0019469ad6a2784e6bcd5e2c2cac8ee/libensemble/tests/regression_tests/test_xopt_EI_xopt_sim.py
-[ex-optimas-libe]: https://github.com/Libensemble/libensemble/blob/e7fef19c19343c5eceaa4353985aa963ebada46c/libensemble/tests/regression_tests/test_optimas_ax_mf.py
-[ex-aposmm-xopt]: https://github.com/xopt-org/Xopt/blob/cfb8d704637aee31e836357cf47ac0acb82bdc71/xopt/tests/generators/external/test_aposmm.py

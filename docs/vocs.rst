@@ -14,7 +14,6 @@ VOCS API
 
 
 .. autoclass:: gest_api.vocs.VOCS
-   :no-members:
 
 
 .. tab-set::
@@ -114,11 +113,7 @@ VOCS API
             ...
             vocs = VOCS(observables={"temp": "float", "temp2": "int"})
 
-
-The :class:`~gest_api.vocs.VOCS` class defines all inputs and outputs
-of an optimization problem.
-
-Each section below links to the detailed structure for that parameter type.
+Each section below links to the detailed structure for the parameters.
 
 .. toctree::
    :maxdepth: 1

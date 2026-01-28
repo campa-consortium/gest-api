@@ -21,8 +21,11 @@ Shorthand forms:
     # Continuous variable with bounds
     vocs = VOCS(variables={"x": [0.0, 1.0]})
 
-    # Discrete variable with allowed values
+    # Discrete variable with allowed values (numeric)
     vocs = VOCS(variables={"x": {0, 1, 2}})
+
+    # Discrete variable with allowed values (strings)
+    vocs = VOCS(variables={"path": {"/usr", "/home", "/bin"}})
 
     # Explicit type form
     vocs = VOCS(variables={"x": {"type": "ContinuousVariable", "domain": [0.0, 1.0]}})

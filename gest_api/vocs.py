@@ -8,7 +8,7 @@ from pydantic import (
     model_validator,
     BaseModel,
     ConfigDict,
-    field_serializer
+    field_serializer,
 )
 
 
@@ -59,8 +59,7 @@ class ValidatedDict(dict, ABC):
 
     @staticmethod
     @abstractmethod
-    def _validate_entry(name, value):
-        ...
+    def _validate_entry(name, value): ...
 
 
 class VariableDict(ValidatedDict):
@@ -305,12 +304,12 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
             observables={"o1"}
         )
     """
+
     variables: VariableDict = Field(
         description="variable names with bounds or discrete sets"
     )
     objectives: ObjectiveDict = Field(
-        default=ObjectiveDict(),
-        description="objective names with type of objective"
+        default=ObjectiveDict(), description="objective names with type of objective"
     )
     constraints: ConstraintDict = Field(
         default=ConstraintDict(),

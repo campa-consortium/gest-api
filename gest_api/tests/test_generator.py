@@ -39,8 +39,7 @@ class RandomGenerator(Generator):
         suggestions = []
         for _ in range(num_points):
             point = {
-                k: random.uniform(*v.domain)
-                for k, v in self.vocs.variables.items()
+                k: random.uniform(*v.domain) for k, v in self.vocs.variables.items()
             }
             suggestions.append(point)
         return suggestions
@@ -74,18 +73,22 @@ class RandomGenerator(Generator):
 
 def test_gen_fails_without_variable():
     with pytest.raises(ValueError, match="at least one variable"):
-        RandomGenerator(VOCS(
-            variables={},
-            objectives={"f": "MINIMIZE"},
-        ))
+        RandomGenerator(
+            VOCS(
+                variables={},
+                objectives={"f": "MINIMIZE"},
+            )
+        )
 
 
 def test_gen_fails_without_objective():
     with pytest.raises(ValueError, match="at least one objective"):
-        RandomGenerator(VOCS(
-            variables={"x": [0, 1]},
-            objectives={},
-        ))
+        RandomGenerator(
+            VOCS(
+                variables={"x": [0, 1]},
+                objectives={},
+            )
+        )
 
 
 def test_gen_fails_with_discrete_variable():
@@ -126,16 +129,16 @@ def test_best_point_selection():
 vocs_full = VOCS(
     variables={
         "x": [0.0, 10.0],  # simple specification
-        "y": ContinuousVariable(domain=[-5.0, 5.0])  # Provide as object
+        "y": ContinuousVariable(domain=[-5.0, 5.0]),  # Provide as object
     },
     objectives={"f": "MINIMIZE"},
     constraints={
         "c": ["GREATER_THAN", 5.5],
         "c1": ["BOUNDS", -5.0, 5.0],
-        "c2": ["LESS_THAN", -4.0]
+        "c2": ["LESS_THAN", -4.0],
     },
     constants={"alpha": 1.0},
-    observables=["temp"]
+    observables=["temp"],
 )
 
 
@@ -164,22 +167,30 @@ def test_gen_with_constraints():
     # Simulate evaluation and add results
     for pt in pts:
         pt["f"] = pt["x"] ** 2 + pt["y"] ** 2  # dummy objective
-        pt["temp"] = pt["x"] - pt["y"]         # dummy observable
-        pt["c"] = pt["x"] - pt["y"]            # dummy constraint
-        pt["c1"] = pt["x"] + pt["y"]           # dummy constraint
-        pt["c2"] = pt["y"] * 2                 # dummy constraint
+        pt["temp"] = pt["x"] - pt["y"]  # dummy observable
+        pt["c"] = pt["x"] - pt["y"]  # dummy constraint
+        pt["c1"] = pt["x"] + pt["y"]  # dummy constraint
+        pt["c2"] = pt["y"] * 2  # dummy constraint
 
-    print('')
+    print("")
 
     # Ingest results
     gen.ingest(pts)
 
-    print('\nResults:')
+    print("\nResults:")
     for pt in gen.data:
         print(pt)
 
     assert len(gen.data) == 1, f"Expected 1 point in gen.data but found {len(gen.data)}"
-    expected = {'x': 4.21, 'y': -2.41, 'f': 23.50, 'temp': 6.62, 'c': 6.62, 'c1': 1.79, 'c2': -4.82}
+    expected = {
+        "x": 4.21,
+        "y": -2.41,
+        "f": 23.50,
+        "temp": 6.62,
+        "c": 6.62,
+        "c1": 1.79,
+        "c2": -4.82,
+    }
     actual = {k: round(gen.data[0][k], 2) for k in expected}
     assert actual == expected
     assert isinstance(list(gen.vocs.objectives.values())[0], MinimizeObjective)

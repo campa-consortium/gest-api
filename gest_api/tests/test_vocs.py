@@ -26,6 +26,53 @@ def test_continuous_variable_invalid_bounds():
         ContinuousVariable(domain=[1.5, 1.0], default_value=0.5)
 
 
+def test_continuous_variable_array_success():
+    var = ContinuousVariable(
+        dtype=(3,),
+        domain=[[0.0, 1.0], [-5.0, 5.0], [10.0, 20.0]]
+    )
+    assert var.dtype == (3,)
+    assert var.domain == [[0.0, 1.0], [-5.0, 5.0], [10.0, 20.0]]
+
+
+def test_continuous_variable_array_with_float_type():
+    var = ContinuousVariable(
+        dtype=(float, (3,)),
+        domain=[[0.0, 1.0], [-5.0, 5.0], [10.0, 20.0]]
+    )
+    assert var.dtype == (float, (3,))
+    assert var.domain == [[0.0, 1.0], [-5.0, 5.0], [10.0, 20.0]]
+
+
+def test_continuous_variable_array_wrong_dimension_count():
+    with pytest.raises(ValidationError, match="Domain has 2 bounds but dtype specifies 3 dimensions"):
+        ContinuousVariable(
+            dtype=(3,),
+            domain=[[0.0, 1.0], [-5.0, 5.0]]  # Only 2 bounds for 3 dimensions
+        )
+
+
+def test_continuous_variable_array_invalid_bounds():
+    with pytest.raises(ValidationError, match="do not satisfy"):
+        ContinuousVariable(
+            dtype=(2,),
+            domain=[[0.0, 1.0], [5.0, 2.0]]  # Second bound is invalid
+        )
+
+
+def test_continuous_variable_scalar_with_nested_list():
+    with pytest.raises(ValidationError, match="should be a single"):
+        ContinuousVariable(domain=[[0.0, 1.0]])  # Scalar shouldn't have nested list
+
+
+def test_continuous_variable_array_with_flat_list():
+    with pytest.raises(ValidationError, match="must be a list of"):
+        ContinuousVariable(
+            dtype=(3,),
+            domain=[0.0, 1.0]  # Array variable needs nested bounds
+        )
+
+
 def test_discrete_variable_success():
     d = DiscreteVariable(values={1, 2, 3})
     assert d.values == {1, 2, 3}
@@ -527,3 +574,39 @@ def test_n_outputs_property():
         observables=["temp"],
     )
     assert vocs.n_outputs == 5
+
+
+def test_vocs_with_array_variables():
+    vocs = VOCS(
+        variables={
+            "x": [0.0, 1.0],
+            "y": ContinuousVariable(dtype=(3,), domain=[[0.0, 1.0], [-5.0, 5.0], [10.0, 20.0]]),
+        },
+        objectives={"f": "MINIMIZE"},
+    )
+    assert isinstance(vocs.variables["x"], ContinuousVariable)
+    assert vocs.variables["x"].domain == [0.0, 1.0]
+    assert isinstance(vocs.variables["y"], ContinuousVariable)
+    assert vocs.variables["y"].dtype == (3,)
+    assert vocs.variables["y"].domain == [[0.0, 1.0], [-5.0, 5.0], [10.0, 20.0]]
+
+
+def test_vocs_array_variables_serialization():
+    vocs = VOCS(
+        variables={
+            "x": [0.0, 1.0],
+            "y": ContinuousVariable(dtype=(2,), domain=[[0.0, 1.0], [-5.0, 5.0]]),
+        },
+        objectives={"f": "MINIMIZE"},
+    )
+    
+    # Serialize to JSON
+    model = vocs.model_dump()
+    
+    # Deserialize back to VOCS object
+    vocs_deserialized = VOCS.model_validate(model)
+    
+    # Check if the deserialized object matches the original
+    assert vocs_deserialized == vocs
+    assert vocs_deserialized.variables["y"].dtype == (2,)
+    assert vocs_deserialized.variables["y"].domain == [[0.0, 1.0], [-5.0, 5.0]]

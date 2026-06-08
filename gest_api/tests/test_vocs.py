@@ -1,6 +1,7 @@
 import pytest
 from pydantic import ValidationError
 from gest_api.vocs import (
+    BaseVariable,
     ContinuousVariable,
     DiscreteVariable,
     VOCS,
@@ -421,6 +422,30 @@ def test_constant_dict_construction():
 def test_bounds_property():
     vocs = VOCS(variables={"x": [0, 1], "y": [2, 4]})
     assert vocs.bounds == [[0, 1], [2, 4]]
+
+
+def test_bounds_property_empty_variables():
+    vocs = VOCS(variables={})
+    assert vocs.bounds == []
+
+
+def test_bounds_property_with_numeric_discrete_variable():
+    vocs = VOCS(variables={"x": [0, 1], "d": {5, 1, 3}})
+    assert vocs.bounds == [[0, 1], [1.0, 5.0]]
+
+
+def test_bounds_property_non_numeric_discrete_variable_raises():
+    vocs = VOCS(variables={"x": {"a", "b"}})
+    with pytest.raises(ValueError, match="cannot be converted to bounds"):
+        _ = vocs.bounds
+
+
+def test_bounds_property_ignores_non_continuous_non_discrete_base_variable():
+    class DummyVariable(BaseVariable):
+        pass
+
+    vocs = VOCS(variables={"x": [0, 1], "dummy": DummyVariable()})
+    assert vocs.bounds == [[0, 1]]
 
 
 def test_variable_names_property():

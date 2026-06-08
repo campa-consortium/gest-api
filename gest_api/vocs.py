@@ -173,14 +173,11 @@ class ConstraintDict(ValidatedDict):
 class BaseObjective(BaseField):
     pass
 
-
 class MinimizeObjective(BaseObjective):
     pass
 
-
 class MaximizeObjective(BaseObjective):
     pass
-
 
 class ExploreObjective(BaseObjective):
     pass
@@ -370,7 +367,21 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
     @property
     def bounds(self) -> list:
         """Return the domain bounds for all variables as a list of [lower, upper] pairs."""
-        return [v.domain for _, v in self.variables.items()]
+        bounds: list = []
+        for _, v in self.variables.items():
+            if isinstance(v, ContinuousVariable):
+                bounds.append(v.domain)
+            elif isinstance(v, DiscreteVariable):
+                # check to make sure discrete variables are numeric and can be converted to bounds
+                try:
+                    numeric_values = sorted(float(val) for val in v.values)
+                    bounds.append([numeric_values[0], numeric_values[-1]])
+                except ValueError:
+                    raise ValueError(
+                        f"Discrete variable with non-numeric values cannot be converted to bounds: {v.values}"
+                    )
+
+        return bounds
 
     @property
     def variable_names(self) -> list[str]:

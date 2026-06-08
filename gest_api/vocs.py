@@ -173,11 +173,14 @@ class ConstraintDict(ValidatedDict):
 class BaseObjective(BaseField):
     pass
 
+
 class MinimizeObjective(BaseObjective):
     pass
 
+
 class MaximizeObjective(BaseObjective):
     pass
+
 
 class ExploreObjective(BaseObjective):
     pass

@@ -40,6 +40,8 @@ class DiscreteVariable(BaseVariable):
         description="List of allowed discrete values"
     )
 
+class ContextualVariable(BaseVariable):
+    pass
 
 class ValidatedDict(dict, ABC):
     def __init__(self, *args, **kwargs):
@@ -370,7 +372,7 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
     @property
     def bounds(self) -> list:
         """Return the domain bounds for all variables as a list of [lower, upper] pairs."""
-        return [v.domain for _, v in self.variables.items()]
+        return [v.domain for _, v in self.variables.items() if not isinstance(v, ContextualVariable)]
 
     @property
     def variable_names(self) -> list[str]:
@@ -450,3 +452,8 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
     def n_outputs(self) -> int:
         """Return the total number of outputs (objectives + constraints + observables)."""
         return len(self.output_names)
+    
+    @property
+    def has_contextual_variables(self) -> bool:
+        """Return True if there are any contextual variables, False otherwise."""
+        return any(isinstance(v, ContextualVariable) for v in self.variables.values())

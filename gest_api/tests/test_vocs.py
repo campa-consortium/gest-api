@@ -3,6 +3,7 @@ from pydantic import ValidationError
 from gest_api.vocs import (
     ContinuousVariable,
     DiscreteVariable,
+    ContextualVariable,
     VOCS,
     BoundsConstraint,
     GreaterThanConstraint,
@@ -527,3 +528,17 @@ def test_n_outputs_property():
         observables=["temp"],
     )
     assert vocs.n_outputs == 5
+
+
+def test_has_contextual_variables_property():
+    vocs_with_context = VOCS(
+        variables={
+            "x": [0.0, 1.0],
+            "context": ContextualVariable(dtype="float"),
+        }
+    )
+    assert vocs_with_context.has_contextual_variables is True
+    assert vocs_with_context.bounds == [[0.0, 1.0]]
+
+    vocs_without_context = VOCS(variables={"x": [0.0, 1.0]})
+    assert vocs_without_context.has_contextual_variables is False

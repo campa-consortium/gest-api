@@ -41,6 +41,19 @@ class DiscreteVariable(BaseVariable):
     )
 
 
+class ContextualVariable(ContinuousVariable):
+    """
+    A variable that is not optimized over, but rather is observed and can be conditioned on.
+
+    By default, contextual variables are unbounded. In contexts that require finite bounds,
+    bounds should be inferred from the currently available data.
+    """
+
+    def __init__(self, **kwargs):
+        kwargs.setdefault("domain", [-float("inf"), float("inf")])
+        super().__init__(**kwargs)
+
+
 class ValidatedDict(dict, ABC):
     def __init__(self, *args, **kwargs):
         raw = dict(*args, **kwargs)  # collect initial data
@@ -84,6 +97,11 @@ class VariableDict(ValidatedDict):
             except KeyError:
                 raise ValueError(f"variable type {variable_type} is not available")
             return class_(**val)
+        elif isinstance(val, str):
+            if val.upper() == "CONTEXTUAL":
+                return ContextualVariable()
+            else:
+                raise ValueError(f"variable {name}: unrecognized string value '{val}'.")
         else:
             raise ValueError(
                 f"variable {name}: input type {type(val)} not supported. "
@@ -450,3 +468,8 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
     def n_outputs(self) -> int:
         """Return the total number of outputs (objectives + constraints + observables)."""
         return len(self.output_names)
+
+    @property
+    def has_contextual_variables(self) -> bool:
+        """Return True if there are any contextual variables, False otherwise."""
+        return any(isinstance(v, ContextualVariable) for v in self.variables.values())

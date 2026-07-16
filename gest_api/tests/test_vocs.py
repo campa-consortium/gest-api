@@ -3,6 +3,7 @@ from pydantic import ValidationError
 from gest_api.vocs import (
     ContinuousVariable,
     DiscreteVariable,
+    ContextualVariable,
     VOCS,
     BoundsConstraint,
     GreaterThanConstraint,
@@ -185,12 +186,16 @@ def test_vocs_1a():
         variables={
             "x": [0, 1],  # Defaults to Continuous even if integer bounds
             "y": {"a", "b", "c"},
+            "z": "CONTEXTUAL",
         },
         objectives={"f": "MINIMIZE"},
         observables={"temp": "float", "temp_type": int, "temp_array": (float, (2, 4))},
     )
     assert isinstance(vocs.variables["x"], ContinuousVariable)
     assert isinstance(vocs.variables["y"], DiscreteVariable)
+    assert isinstance(vocs.variables["z"], ContextualVariable)
+    assert vocs.variables["x"].domain == [0, 1]
+    assert vocs.variables["z"].domain == [-float("inf"), float("inf")]
     assert isinstance(vocs.observables["temp"], Observable)
     assert vocs.observables["temp"].dtype == "float"
     assert isinstance(vocs.observables["temp_type"], Observable)
@@ -296,10 +301,7 @@ def test_vocs_3b():
 
 def test_vocs_serialization_deserialization():
     vocs = VOCS(
-        variables={
-            "x": [0, 1],
-            "y": {"a", "b", "c"},
-        },
+        variables={"x": [0, 1], "y": {"a", "b", "c"}, "z": "CONTEXTUAL"},
         objectives={"f1": "MINIMIZE", "f2": "MAXIMIZE", "f3": "EXPLORE"},
         constraints={
             "c": ["GREATER_THAN", 0.0],
@@ -419,8 +421,12 @@ def test_constant_dict_construction():
 
 
 def test_bounds_property():
-    vocs = VOCS(variables={"x": [0, 1], "y": [2, 4]})
-    assert vocs.bounds == [[0, 1], [2, 4]]
+    vocs = VOCS(variables={"x": [0, 1], "y": [2, 4], "z": "CONTEXTUAL"})
+    assert vocs.bounds == [
+        [0, 1],
+        [2, 4],
+        [-float("inf"), float("inf")],
+    ]  # Contextual variable has unbounded domain
 
 
 def test_variable_names_property():
@@ -527,3 +533,21 @@ def test_n_outputs_property():
         observables=["temp"],
     )
     assert vocs.n_outputs == 5
+
+
+def test_has_contextual_variables_property():
+    vocs_with_context = VOCS(
+        variables={
+            "x": [0.0, 1.0],
+            "context": ContextualVariable(dtype="float"),
+        }
+    )
+    assert vocs_with_context.has_contextual_variables is True
+
+    vocs_without_context = VOCS(variables={"x": [0.0, 1.0]})
+    assert vocs_without_context.has_contextual_variables is False
+
+
+def test_bad_string_variable_type():
+    with pytest.raises(ValueError, match="unrecognized string value"):
+        VOCS(variables={"x": "INVALID_TYPE"}, objectives={})

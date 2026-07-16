@@ -421,8 +421,12 @@ def test_constant_dict_construction():
 
 
 def test_bounds_property():
-    vocs = VOCS(variables={"x": [0, 1], "y": [2, 4]})
-    assert vocs.bounds == [[0, 1], [2, 4]]
+    vocs = VOCS(variables={"x": [0, 1], "y": [2, 4], "z": "CONTEXTUAL"})
+    assert vocs.bounds == [
+        [0, 1],
+        [2, 4],
+        [-float("inf"), float("inf")],
+    ]  # Contextual variable has unbounded domain
 
 
 def test_variable_names_property():

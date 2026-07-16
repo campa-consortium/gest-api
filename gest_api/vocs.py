@@ -388,11 +388,7 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
     @property
     def bounds(self) -> list:
         """Return the domain bounds for all variables as a list of [lower, upper] pairs."""
-        return [
-            v.domain
-            for _, v in self.variables.items()
-            if not isinstance(v, ContextualVariable)
-        ]
+        return [v.domain for _, v in self.variables.items()]
 
     @property
     def variable_names(self) -> list[str]:

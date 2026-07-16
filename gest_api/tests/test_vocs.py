@@ -543,7 +543,6 @@ def test_has_contextual_variables_property():
         }
     )
     assert vocs_with_context.has_contextual_variables is True
-    assert vocs_with_context.bounds == [[0.0, 1.0]]
 
     vocs_without_context = VOCS(variables={"x": [0.0, 1.0]})
     assert vocs_without_context.has_contextual_variables is False

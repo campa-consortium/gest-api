@@ -186,12 +186,16 @@ def test_vocs_1a():
         variables={
             "x": [0, 1],  # Defaults to Continuous even if integer bounds
             "y": {"a", "b", "c"},
+            "z": "CONTEXTUAL",
         },
         objectives={"f": "MINIMIZE"},
         observables={"temp": "float", "temp_type": int, "temp_array": (float, (2, 4))},
     )
     assert isinstance(vocs.variables["x"], ContinuousVariable)
     assert isinstance(vocs.variables["y"], DiscreteVariable)
+    assert isinstance(vocs.variables["z"], ContextualVariable)
+    assert vocs.variables["x"].domain == [0, 1]
+    assert vocs.variables["z"].domain == [-float("inf"), float("inf")]
     assert isinstance(vocs.observables["temp"], Observable)
     assert vocs.observables["temp"].dtype == "float"
     assert isinstance(vocs.observables["temp_type"], Observable)
@@ -300,6 +304,7 @@ def test_vocs_serialization_deserialization():
         variables={
             "x": [0, 1],
             "y": {"a", "b", "c"},
+            "z": "CONTEXTUAL"
         },
         objectives={"f1": "MINIMIZE", "f2": "MAXIMIZE", "f3": "EXPLORE"},
         constraints={

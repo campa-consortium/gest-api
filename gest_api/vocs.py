@@ -41,8 +41,17 @@ class DiscreteVariable(BaseVariable):
     )
 
 
-class ContextualVariable(BaseVariable):
-    pass
+class ContextualVariable(ContinuousVariable):
+    """
+    A variable that is not optimized over, but rather is observed and can be conditioned on.
+
+    By default, contextual variables are unbounded. In contexts that require finite bounds,
+    bounds should be inferred from the currently available data.
+    """
+
+    def __init__(self, **kwargs):
+        kwargs.setdefault("domain", [-float("inf"), float("inf")])
+        super().__init__(**kwargs)
 
 
 class ValidatedDict(dict, ABC):
@@ -88,6 +97,13 @@ class VariableDict(ValidatedDict):
             except KeyError:
                 raise ValueError(f"variable type {variable_type} is not available")
             return class_(**val)
+        elif isinstance(val, str):
+            if val.upper() == "CONTEXTUAL":
+                return ContextualVariable()
+            else:
+                raise ValueError(
+                    f"variable {name}: unrecognized string value '{val}'."
+                )
         else:
             raise ValueError(
                 f"variable {name}: input type {type(val)} not supported. "

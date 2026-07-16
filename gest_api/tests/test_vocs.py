@@ -546,3 +546,8 @@ def test_has_contextual_variables_property():
 
     vocs_without_context = VOCS(variables={"x": [0.0, 1.0]})
     assert vocs_without_context.has_contextual_variables is False
+
+
+def test_bad_string_variable_type():
+    with pytest.raises(ValueError, match="unrecognized string value"):
+        VOCS(variables={"x": "INVALID_TYPE"}, objectives={})

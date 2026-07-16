@@ -101,9 +101,7 @@ class VariableDict(ValidatedDict):
             if val.upper() == "CONTEXTUAL":
                 return ContextualVariable()
             else:
-                raise ValueError(
-                    f"variable {name}: unrecognized string value '{val}'."
-                )
+                raise ValueError(f"variable {name}: unrecognized string value '{val}'.")
         else:
             raise ValueError(
                 f"variable {name}: input type {type(val)} not supported. "

@@ -301,11 +301,7 @@ def test_vocs_3b():
 
 def test_vocs_serialization_deserialization():
     vocs = VOCS(
-        variables={
-            "x": [0, 1],
-            "y": {"a", "b", "c"},
-            "z": "CONTEXTUAL"
-        },
+        variables={"x": [0, 1], "y": {"a", "b", "c"}, "z": "CONTEXTUAL"},
         objectives={"f1": "MINIMIZE", "f2": "MAXIMIZE", "f3": "EXPLORE"},
         constraints={
             "c": ["GREATER_THAN", 0.0],

@@ -391,7 +391,6 @@ class VOCS(BaseModel, validate_assignment=True, arbitrary_types_allowed=True):
         return [
             v.domain
             for _, v in self.variables.items()
-            if isinstance(v, ContinuousVariable)
         ]
 
     @property
